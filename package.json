@@ -1,0 +1,40 @@
+{
+  "name": "@killovsky/4devs",
+  "version": "1.0.0",
+  "description": "Módulo para geração de dados falsos com base no site 4Devs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KillovSky/4DEVS.git"
+  },
+  "keywords": [
+    "data",
+    "4devs",
+    "banco",
+    "cpf",
+    "rg",
+    "cep",
+    "idade",
+    "gerador",
+    "fake",
+    "fakedata",
+    "dados",
+    "generator",
+    "bank",
+    "cartao",
+    "credito",
+    "password",
+    "senha",
+    "gerar",
+    "cnpj"
+  ],
+  "author": "KillovSky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KillovSky/4DEVS/issues"
+  },
+  "homepage": "https://github.com/KillovSky/4DEVS#readme"
+}
