@@ -1,6 +1,6 @@
 {
   "name": "@killovsky/4devs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Módulo para geração de dados falsos com base no site 4Devs.",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,8 @@
     "gerador",
     "fake",
     "fakedata",
+	"easy",
+	"no-dependencies",
     "dados",
     "generator",
     "bank",
@@ -36,5 +38,19 @@
   "bugs": {
     "url": "https://github.com/KillovSky/4DEVS/issues"
   },
-  "homepage": "https://github.com/KillovSky/4DEVS#readme"
+  "homepage": "https://github.com/KillovSky/4DEVS#readme",
+  "funding": [
+    {
+      "type": "kofi",
+      "url": "http://ko-fi.com/killovsky"
+    },
+    {
+      "type": "paypal",
+      "url": "https://bit.ly/33QDaGa"
+    },
+    {
+      "type": "picpay",
+      "url": "https://picpay.me/userlucas123"
+    }
+  ]
 }

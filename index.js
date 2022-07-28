@@ -1,7 +1,8 @@
-const https = require('https');
-const querystring = require('querystring');
-const httpcodes = require('./codes.json');
-const default_data = require('./default.json');
+"use strict";
+const https = require("https");
+const querystring = require("querystring");
+const httpcodes = require("./codes.json");
+const default_data = require("./default.json");
 
 /*######################################################################################
 #
@@ -43,42 +44,42 @@ const default_data = require('./default.json');
 
 /* Cria a exports para atuar como função */
 exports.gerar = (
-	quantity = '1',
-	commas = '',
-	type = ''
+	quantity = "1",
+	commas = "",
+	type = ""
 ) => {
 
 	/* Faz uma promise com a função para funcionar perfeitamente */
-	return new Promise((resolve, reject) => {
+	return new Promise(resolve => {
 
 		/* Define a pontuação se não inserida */
-		if (commas == '' || commas == null || commas == false) {
-			commas = 'N';
+		if (commas == "" || commas == null || commas == false) {
+			commas = "N";
 		} else if (commas == true) {
-			commas = 'S';
+			commas = "S";
 		} else {
-			commas = 'N';
-		};
+			commas = "N";
+		}
 
 		/* Escolhe o tipo de informação a gerar [type em letra minuscula] */
-		type = type == null ? '' : type.toLowerCase();
-		if (type == '' || type == null || type == 'pessoa') {
-			type = 'gerar_pessoa';
-		} else if (type == 'rg') {
-			type = 'gerar_rg';
-		} else if (type == 'cpf') {
-			type = 'gerar_cpf';
-		} else if (type == 'cnpj') {
-			type = 'gerar_cnpj';
+		type = type == null ? "" : type.toLowerCase();
+		if (type == "" || type == null || type == "pessoa") {
+			type = "gerar_pessoa";
+		} else if (type == "rg") {
+			type = "gerar_rg";
+		} else if (type == "cpf") {
+			type = "gerar_cpf";
+		} else if (type == "cnpj") {
+			type = "gerar_cnpj";
 		} else {
-			type = 'gerar_pessoa';
-		};
+			type = "gerar_pessoa";
+		}
 
 		/* Limita a quantidade de dados a gerar, para evitar sobrecarga na 4DEVS */
 		/* Você pode tirar o limite disso removendo o if, mas VAI sofrer problemas GRAVES... */
 		if (quantity > 10) {
-			quantity = '10';
-		};
+			quantity = "10";
+		}
 
 		/* Cria a object de return em casos de erros, não afetando o usuário mas permitindo que ele saiba quando der erro */
 		let response = default_data[Math.floor(Math.random() * default_data.length)];
@@ -91,16 +92,16 @@ exports.gerar = (
 		});
 
 		/* Opções de acesso na API */
-		var options = {
-			hostname: 'www.4devs.com.br',
-			path: '/ferramentas_online.php',
-			method: 'POST',
+		let options = {
+			hostname: "www.4devs.com.br",
+			path: "/ferramentas_online.php",
+			method: "POST",
 			headers: {
-				'authority': 'www.4devs.com.br',
-				'accept': '*/*',
-				'accept-language': 'en-US,en;q=0.9,pt;q=0.8',
-				'Content-Type': 'application/x-www-form-urlencoded',
-				'Content-Length': body.length
+				"authority": "www.4devs.com.br",
+				"accept": "*/*",
+				"accept-language": "en-US,en;q=0.9,pt;q=0.8",
+				"Content-Type": "application/x-www-form-urlencoded",
+				"Content-Length": body.length
 			}
 		};
 
@@ -108,56 +109,56 @@ exports.gerar = (
 		try {
 
 			/* Let para obter a chunk da requisição */
-			let data = '';
+			let data = "";
 
 			/* Faz a requisição na API */
-			const req = https.request(options, function(res) {
+			const req = https.request(options, function (res) {
 
 				/* Insere as informações na JSON */
 				let Today_Day = new Date();
-				response['date'] = Today_Day.toLocaleString();
-				response['code'] = res.statusCode;
-				response['explain'] = httpcodes[res.statusCode];
-				response['headers'] = res.headers;
+				response.date = Today_Day.toLocaleString();
+				response.code = res.statusCode;
+				response.explain = httpcodes[res.statusCode];
+				response.headers = res.headers;
 
 				/* Recebe a chunk da API */
-				res.on('data', function(chunk) {
+				res.on("data", function (chunk) {
 					data += chunk;
 				});
 
 				/* Em caso de falhas */
-				req.on("error", function(err) {
-					response['error'] = true;
-					response['code'] = err.code;
-					response['error_msg'] = err.message;
+				req.on("error", function (err) {
+					response.error = true;
+					response.code = err.code;
+					response.error_msg = err.message;
 					return resolve(response);
 				});
 
 				/* Finaliza pois o resultado foi recebido */
-				res.on('end', function() {
+				res.on("end", function () {
 
 					/* Cria uma let temporariamente para filtrar o resultado */
 					let Four_Devs = false;
-					
+
 					/* Outro Try - Catch para checar se tudo correu bem e a resposta esta aceitável */
 					try {
 						Four_Devs = JSON.parse(data);
 					} catch (error) {
 						Four_Devs = false;
-						response['error_msg'] = error.message;
-					};
+						response.error_msg = error.message;
+					}
 
 					/* Verifica se obteve erro, se sim, não edita o JSON padrão, mas insere o erro, garantindo a funcionalidade */
-					if (response['code'] !== 200 || Four_Devs == false) {
+					if (response.code !== 200 || Four_Devs == false) {
 
 						/* Refaz os parâmetros acima caso algum erro aconteça */
-						if (response['error_msg'] == "Unexpected end of JSON input") {
-							response['code'] = response['code'] !== 200 ? response['code'] : 400;
-							response['explain'] = httpcodes[response['code']];
-							response['headers'] = res.headers;
-						}; 
-						response['error'] = true;
-						response['dev_msg'] = "Maybe you got blocked by the server, make sure you're using proxy or something and try on another machine.";
+						if (response.error_msg == "Unexpected end of JSON input") {
+							response.code = response.code !== 200 ? response.code : 400;
+							response.explain = httpcodes[response.code];
+							response.headers = res.headers;
+						}
+						response.error = true;
+						response.dev_msg = "Maybe you got blocked by the server, make sure you're not using proxy or something and try on another machine.";
 
 						/* Se não tiver erros, verifica se alguma informação faltou */
 					} else {
@@ -196,17 +197,17 @@ exports.gerar = (
 							for (let keyset of keys_JSON) {
 
 								/* Se não tiver a key, insere um valor aleatório do default */
-								Four_Devs[i][keyset] = Four_Devs[i][keyset] == null ? default_data[i]['dados'][0][keyset] : Four_Devs[i][keyset];
+								Four_Devs[i][keyset] = Four_Devs[i][keyset] == null ? default_data[i].dados[0][keyset] : Four_Devs[i][keyset];
 								
-							};
+							}
 							
-						};
+						}
 
 						/* Finaliza o JSON */
-						response['error'] = false;
-						response['dados'] = Four_Devs;
+						response.error = false;
+						response.dados = Four_Devs;
 						
-					};
+					}
 					
 				});
 
@@ -216,10 +217,10 @@ exports.gerar = (
 			});
 
 			/* Em caso de falhas 2x */
-			req.on("error", function(err) {
-				response['error'] = true;
-				response['code'] = err.code;
-				response['error_msg'] = err.message;
+			req.on("error", function (err) {
+				response.error = true;
+				response.code = err.code;
+				response.error_msg = err.message;
 				return resolve(response);
 			});
 
@@ -229,12 +230,12 @@ exports.gerar = (
 
 			/* Caso der erro em alguma coisa, não afeta o resultado e cai no catch abaixo */
 		} catch (error) {
-			response['error'] = true;
-			response['code'] = error.code;
-			response['error_msg'] = error.message;
+			response.error = true;
+			response.code = error.code;
+			response.error_msg = error.message;
 			return resolve(response);
-		};
-
+		}
+		
 	});
 
 };

@@ -4,6 +4,18 @@
 ## O que este módulo faz?  
 - Ele utiliza o site [4 Devs](https://www.4devs.com.br) para gerar vários tipos de informações falsas.  
   
+## Instalação:  
+- Rode o código abaixo para instalar via `NPM`:  
+  
+```bash  
+$ npm i @killovsky/4devs  
+```  
+  
+- Rode o código abaixo para instalar via `GIT`:  
+```bash  
+$ git clone https://github.com/KillovSky/4devs.git  
+```  
+  
 ## O que este módulo tem de especial?  
 - Assim como o da [NASA](https://github.com/KillovSky/NASA), muitas coisas, confira abaixo:  
   
@@ -233,10 +245,9 @@ console.log(data);
 >  
 - Esses dados são reais ou podem ser usados?  
 > Alguns locais possuem baixa segurança e não validam as informações, podendo sofrer roubos com estes dados, das quais são FALSOS e gerados aleatoriamente.  
-  
-## TO-DO  
-- [ ] Inserir outras ferramentas.  
-- [ ] Qualquer outra melhoria necessária.  
+>  
+- O que é proibido ao usar este módulo?  
+> Você jamais deve abusar de qualquer programa, sempre crie um limitador de tempo ou armazene a ultima resposta e use ela, evite ficar utilizando um programa deste estilo muitas vezes seguidas sem esperar.  
   
 ## Suporte  
   
